@@ -15,10 +15,21 @@
                 </div>
             </header>
             <div id="users">
-                @foreach ($users as $user)
+                @foreach ($groups[0] as $group)
                     <div class="user" style="margin-bottom: 20px;">
-                        <h1>{{ $user->name }}</h1>
-                        <a class="button" href="/chatroom/{{ $user->name }}">Message</a>
+                        <h1>{{ $group->group_name }}</h1>
+                        <div clas="top-buttons">
+                            <form method="POST" style="display: inline-block;" name="accept" id="accept" action="{{ route('accept', [ 'group' => $group->unique_id ]) }}">
+                                {{ method_field("PUT") }}
+                                @csrf
+                                <button type="submit" class="button create-group options accept">Accept</button>
+                            </form>
+                            <form method="POST" style="display: inline-block;" name="reject" id="reject" action="{{ route('reject', [ 'group' => $group->unique_id ]) }}">
+                                {{ method_field("DELETE") }}
+                                @csrf
+                                <button class="button create-group options reject">Reject</button>
+                            </form>    
+                        </div>
                     </div>
                 @endforeach
             </div>

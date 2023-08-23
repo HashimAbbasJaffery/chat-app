@@ -44,6 +44,12 @@ class User extends Authenticatable
     ];
 
     public function Groups() {
-        return $this->belongsToMany(Group::class, "group_members");
+        return $this->belongsToMany(Group::class, "group_members")->withPivot("status");
+    }
+
+    public function scopeGroupsWithStatus($query, int $status) {
+        return $query->with(["groups" => function($query) use ($status) {
+            $query->where("status", $status);
+        }]);
     }
 }

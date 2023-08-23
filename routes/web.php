@@ -6,6 +6,7 @@ use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Models\Group;
 use App\Http\Controllers\InvitationsController;
 
 /*
@@ -23,6 +24,9 @@ Route::get("/users", [UserController::class, "index"]);
 Route::get("/chatroom/{user:name}", function(User $user) {
    return view("index", compact("user")); 
 });
+Route::get("/groupchatroom/{group:unique_id}", function(Group $group) {
+    return view("index", compact("group")); 
+});
 
 Route::get("/create-group/{user:name}", [GroupController::class, "index"])
         ->name("create.group");
@@ -32,6 +36,16 @@ Route::post("/create-group", [GroupController::class, "store"])
 Route::post("/invite/{group:unique_id}", [GroupController::class, "invite"]);
 Route::get("/invitations/{user:name}", [InvitationsController::class, "index"])
         ->name("invitations");
+Route::post("/userLogout", function() {
+    auth()->logout();
+    return redirect()->back();
+});
+
+Route::put("/accept/{group:unique_id}", [InvitationsController::class, "accept"])
+        ->name("accept");
+Route::delete("/reject/{group:unique_id}", [InvitationsController::class, "reject"])
+        ->name("reject");
+
 
 
 Route::get('/', function () {
