@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <input type="text" id="message" name="message">
+        <input type="text" id="message" onkeydown="isTyping()" name="message">
         <button onclick="send()">Click!</button>
     </div>
 </body>
@@ -57,6 +57,7 @@
     const channelAddress = `channel-${ Math.min(...ids) }-${ Math.max(...ids) }`;
     var channel = pusher.subscribe(channelAddress);
     const chatbox = document.getElementById("chatbox");
+
     channel.bind('message', function (data) {
         let type = "sender";
         const name = `{{ auth()->user()->name }}`;
@@ -72,7 +73,8 @@
                 </div>
             </div>
         `
-    });
+    }); 
 </script>
+<script type="module" src="/typing.js"></script>
 
 </html>

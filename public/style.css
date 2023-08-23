@@ -45,7 +45,14 @@ body {
 .user {
     border-radius: 10px;
 }
-.user a {
+.user-list {
+    margin-top: 25px;
+    border: 1px solid #dfdddd;
+    border-radius: 5px;
+    height: 60%;
+    overflow-y: auto;
+}
+.button {
     background: #dfdddd;
     color: black;
     text-decoration: none;
@@ -53,6 +60,41 @@ body {
     border-radius: 10px;
     transition: .3s;
 }
-.user a:hover {
+.user a:hover,
+.submit_button:hover {
     background: #c9c7c7;
+}
+.create-group {
+    background: white;
+}
+.group_name {
+    border: 1px solid #c9c7c7;
+    width: 40%;
+    border-radius: 5px;
+    padding: 10px 0px 10px 10px;
+    outline: none;
+    transition: .3s; 
+}
+.submit_button {
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: .2s;
+}
+.group_name:focus {
+    border: 1px solid black;
+}
+#create_group,
+#user-list {
+    transform: .5s;
+}
+#user-list {
+    display: none;
+}
+.submit_button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+.submit_button:disabled:hover {
+    background: #dfdddd;
 }
