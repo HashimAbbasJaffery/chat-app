@@ -16,6 +16,7 @@ use App\Http\Controllers\ChatController;
 */
 
 Route::post("message", [ChatController::class, "message"]);
+Route::post("group", [ChatController::class, "groupMessage"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -25,7 +25,9 @@ Route::get("/chatroom/{user:name}", function(User $user) {
    return view("index", compact("user")); 
 });
 Route::get("/groupchatroom/{group:unique_id}", function(Group $group) {
-    return view("index", compact("group")); 
+    if( !auth()->user()->id ) abort(404);
+    if( !$group->users()->wherePivot("user_id", auth()->user()->id)->wherePivot("status", 1)->get()->isNotEmpty() ) abort(403);
+    return view("groupchat", compact("group")); 
 });
 
 Route::get("/create-group/{user:name}", [GroupController::class, "index"])

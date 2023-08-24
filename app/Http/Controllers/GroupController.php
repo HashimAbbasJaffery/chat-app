@@ -55,8 +55,9 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        if(!auth()->user()) return true;
-
+        $user = auth()->user();
+        if(!$user) return true;
+        $user_id = $user->id;
         $group_name = $request->group_name;
 
         if(!$group_name) return [
@@ -65,10 +66,18 @@ class GroupController extends Controller
 
         $uniqid = uniqid() . time();
 
-        Group::create([
+        $group = Group::create([
             "group_name" => $group_name,
             "unique_id" => $uniqid
         ]);
+
+        $admin = User::find($user_id);
+        $group->users()->attach(
+            $admin->id,
+            [
+                "status" => 1
+            ]
+        );
 
         return [
             "status" => true,

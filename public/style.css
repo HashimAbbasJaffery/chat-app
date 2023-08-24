@@ -103,3 +103,6 @@ body {
 .submit_button:disabled:hover {
     background: #dfdddd;
 }
+.user-list-button {
+    display: none;
+}

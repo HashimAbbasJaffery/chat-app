@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GroupChatEvent;
 use Illuminate\Http\Request;
 use App\Events\Message;
 use Illuminate\Support\Facades\Auth;
@@ -20,5 +21,15 @@ class ChatController extends Controller
         $message = request()->get("message");
         $user = User::find($sender_id);
         event( new Message($sender_id, $reciever_id, $user->name, $message) );
+    }
+
+    public function groupMessage() {
+        $reciever_id = request()->get("reciever_id");
+        $sender_id = request()->get("sender_id");
+        
+        $user = User::find($sender_id);
+
+        $message = request()->get("message");
+        event( new GroupChatEvent( $user->name, $reciever_id, $message ) );    
     }
 }
